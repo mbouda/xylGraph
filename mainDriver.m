@@ -60,6 +60,15 @@
     end
     nVC=nVert./nComp; %mean number of conduits in xylem strand
     
+%% Load synthetic graphs (shape series in Figure 1)
+
+    fileName=''; % options (copy into fileName string):  
+                 %          hcRings / hcElls / hcTril / hcSixl
+                 %files must be downloaded from OSF repository and placed
+                 %on matlab path
+    dat=load(fileName);
+
+
 %% Synthetic graph construction I: Growth of selected shapes
 
     % Terete shape
