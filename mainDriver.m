@@ -63,7 +63,7 @@
 %% Load synthetic graphs (shape series in Figure 1)
 
     fileName=''; % options (copy into fileName string):  
-                 %          hcRings / hcElls / hcTril / hcSixl
+                 %          hcRings | hcElls | hcTril | hcSixl
                  %files must be downloaded from OSF repository and placed
                  %on matlab path
     dat=load(fileName);
@@ -171,7 +171,29 @@
     el=driveOptConstVC(nCores,ra,lb,ub,targP88,nPts,nLay);
     %returns structure containing resulting major & minor radius, vertex coordiantes and graph
 
+%% Synthetic graph construction IV: Exhaustive search
 
+    nPts=420; %number of nodes in the disc-shaped honeycomb field over which construction will take place
+    nLay=18; %max radius (in number nodes) of field
+    
+    targSize=5; %Desired size (number of nodes) of graphs that are to be returned
+                %runs in feasible time up to target size of 8 on single CPU
+    
+    exhGraphs=exhaustHoney(nPts,nLay,targSize); %performs exhaustive search
+        %returns structure containing:
+        %substructre gSize with:
+            %graphs of sizes up to the desired target size
+            %their weights (i.e. how many ways an identical graph can be
+                %constructed from scratch) NOTE: theoretically, there are 6 ways to
+                %get a graph of 2 nodes from a graph of 1 node on the honeycomb
+                %field, so all these numbers could be multipled by 6 to obtain
+                %weights from a starting point of a single node. The distribution
+                %would note change.
+        %several further fields which are needed to restart the
+            %construction algorithm starting from the set of graphs already
+            %constructed for a size >2. This would require using the
+            %exhaustHoney function to make a new continuation function.
+    
 %% Embolism spread simulation
 
     nEmbInit=1; %number embolisms placed randomly at start of simulaiton
